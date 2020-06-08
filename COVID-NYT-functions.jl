@@ -1,5 +1,9 @@
 using CSV, DataFrames, Plots, Dates
 
+# May be required if there are problems with @tbl
+# using WebIO, IJulia; WebIO.install_jupyter_nbextension()
+# If needed, may need to reinstall jupyter
+
 # TableView is a better way to display DataFrames
 # @tbl macro makes it easy to use
 using Tables, TableView
