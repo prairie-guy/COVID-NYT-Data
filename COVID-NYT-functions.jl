@@ -222,7 +222,7 @@ function graph_epidemiological_curve(dfc::DataFrame, state::String, county::Stri
     df = select_region(dfc,state,county)
     bar(df.date, df.casesIncrease, label = "Daily Cases")
     plot!(df.date, df.casesIncreaseMA,
-          xticks=Date.(df.date)[1:14:end], xrotation=45,
+          xticks=Date.(df.date)[reverse(end:-14:1)], xrotation=45,
           lw=2, color=:red,leg=:topleft, label = "7-day Avg")
     xlabel!("Date")
     ylabel!("New Cases")
@@ -233,7 +233,7 @@ function graph_epidemiological_curve(dfc::DataFrame, state::String)
     df = select_region(dfc,state)
     bar(df.date, df.casesIncrease, label = "Daily Cases")
     plot!(df.date, df.casesIncreaseMA,
-          xticks=Date.(df.date)[1:14:end], xrotation=45,
+          xticks=Date.(df.date)[reverse(end:-14:1)], xrotation=45,
           lw=2, color=:red,leg=:topleft, label = "7-day Avg")
     xlabel!("Date")
     ylabel!("New Cases")
