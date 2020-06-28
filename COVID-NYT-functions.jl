@@ -101,12 +101,17 @@ function get_nyt_county_covid_data(days_ma::Int=7,days_delta::Int=7) # Assumes {
             r.county =="Jackson County" ||
             r.county =="Platte County",
         pops))
-    kc_pop = combine(kc,:population=>sum)[1,1] 
+    kc_pop = combine(kc,:population=>sum)[1,1]
+
+    # Joplin City, MO is reported separately from Jasper and Newton counties
+    # Population: https://www.census.gov/quickfacts/fact/table/joplincitymissouri/PST045219
+    jc_pop = 50000 
 
     # Join 'population with into dfc'
     dfc = leftjoin(dfc,df_fips, on="fips")
     dfc[dfc[:,:county] .== "New York City",:population] .= nyc_pop
     dfc[dfc[:,:county] .== "Kansas City"  ,:population] .= kc_pop
+    dfc[dfc[:,:county] .== "Joplin"  ,:population] .= jc_pop
     dfc[ismissing.(dfc[:,:fips]),:fips] .= "-1"
     
     dfc
