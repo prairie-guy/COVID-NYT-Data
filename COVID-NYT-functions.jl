@@ -105,7 +105,14 @@ function get_nyt_county_covid_data(days_ma::Int=7,days_delta::Int=7) # Assumes {
 
     # Joplin City, MO is reported separately from Jasper and Newton counties
     # Population: https://www.census.gov/quickfacts/fact/table/joplincitymissouri/PST045219
-    jc_pop = 50000 
+    jc_pop = 50000
+
+
+    # County Populations are not available for:
+    # "Virgin Islands","Puerto Rico", "Northern Mariana Islands"
+    # Filter these out
+    excluded_st = ["Virgin Islands","Puerto Rico", "Northern Mariana Islands"]
+    dfc = filter(r-> r.state ∉ excluded_st,dfc)
 
     # Join 'population with into dfc'
     dfc = leftjoin(dfc,df_fips, on="fips")
